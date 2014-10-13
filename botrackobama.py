@@ -8,10 +8,10 @@ tweets1 = [" Thank you", " The world is a better place thanks to Americans such 
 idnum = 0
 
 # your twitter consumer and access information goes here
-apiKey = 'E3uDGdmcCVvlmNWnii7X3x4Qu'
-apiSecret = 'H7sT0A7OO2vUCljwat6uIPMPcbKuaqiozJont39vInIb0ze1iD'
-accessToken = '2853512262-Gbwscus5odHx9F6tJb2Zt8Qo5vHRn7L2wHfNXgY'
-accessTokenSecret = 'ZIJoM8lOuVyOl1s4PQX9NaGuvlOpNF31Iu8Yb7BOCPBYP'
+apiKey = '****'
+apiSecret = '****'
+accessToken = '****'
+accessTokenSecret = '****'
 
 twitter = Twython(apiKey,apiSecret,accessToken,accessTokenSecret)
 
