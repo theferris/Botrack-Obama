@@ -8,15 +8,22 @@ tweets1 = [" Thank you", " The world is a better place thanks to Americans such 
 idnum = 0
 
 # your twitter consumer and access information goes here
-apiKey = 'Ul9ABKhQhMFyI6vnaaigliovU'
-apiSecret = 'ZpDeWw74343XCoGfNwNiTJHyrcwtlJOgJS5kuqkVaTM4hvgl6J'
-accessToken = '2795628668-nR8GtXl9dzK6D0hWbqZeY4LzRluzmuRBvUH3grk'
-accessTokenSecret = 'SIvRqWi12joqmEHxFqeHS8bhKMkrvGpjkrmAOeB9i68gc'
+apiKey = 'E3uDGdmcCVvlmNWnii7X3x4Qu'
+apiSecret = 'H7sT0A7OO2vUCljwat6uIPMPcbKuaqiozJont39vInIb0ze1iD'
+accessToken = '2853512262-Gbwscus5odHx9F6tJb2Zt8Qo5vHRn7L2wHfNXgY'
+accessTokenSecret = 'ZIJoM8lOuVyOl1s4PQX9NaGuvlOpNF31Iu8Yb7BOCPBYP'
 
 twitter = Twython(apiKey,apiSecret,accessToken,accessTokenSecret)
 
 while True:
-
+    try:
+        followers = api.get_followers_ids(screen_name = "Twitter Handle goes here")
+        for followers_ids in followers['ids']:
+            api.create_friendship(user_id=followers_ids)
+    except TwythonError as e:
+        print(e)
+        
+    tweets1 = open("botrackobamatweets.txt").readlines()
     search_results = twitter.search(q="thanksobama", count=10)
     #print(search_results)
     for tweet in search_results["statuses"]:
@@ -27,13 +34,13 @@ while True:
                 message = tweets1[rannum]
                 if rannum == 2:
                     #Below line retweets the statuses
-                    #twitter.retweet(id = tweet["id_str"])
-                    print ("Retweeted")
+                    twitter.retweet(id = tweet["id_str"])
+                    #print ("Retweeted")
                 print(message)
                 screenname = "@" + tweet["user"]["screen_name"];
                 print(screenname)
-                #twitter.update_status(status=screenname + message, in_reply_to_status_id=tweet["id_str"])
-                print("Debug block 1")
+                twitter.update_status(status=screenname + message, in_reply_to_status_id=tweet["id_str"])
+                #print("Debug block 1")
                 idnum = tweet["id_str"]
                 time.sleep(timeout)
 
@@ -42,7 +49,7 @@ while True:
         else:
             print("Skip")
     #print(search_results)
-    print("Debug Block 2")
+    #print("Debug Block 2")
 
 
 
