@@ -4,7 +4,7 @@ import random
 from twython import Twython, TwythonError
 
 timeout = 1.44 * 60
-idnum = 'string'
+idnum = '0'
 count = 0
 
 # your twitter consumer and access information goes here
@@ -24,42 +24,39 @@ while True:
         print(e)
         
     tweets1 = open("botrackobamatweets.txt").readlines()
-    search_results = twitter.search(q="thanksobama", count=20)
+    search_results = twitter.search(q="thanksobama", since_id = idnum, count=20)
     #print(search_results)
     count = 0
     for tweet in search_results["statuses"]:
-        if tweet["id_str"] > idnum:
-            try:
-                listlength = len(tweets1)
-                rannum = random.randrange(listlength)
-                message = tweets1[rannum]
-                if rannum == 2:
-                    #Below line retweets the statuses
-                    twitter.retweet(id = tweet["id_str"])
-                    #print ("Retweeted")
+        try:
+            listlength = len(tweets1)
+            rannum = random.randrange(listlength)
+            message = tweets1[rannum]
+            if rannum == 2:
+                #Below line retweets the statuses
+                twitter.retweet(id = tweet["id_str"])
+                #print ("Retweeted")
+                
+            if rannum == 4:
+                #Below line favorites the statuses
+                twitter.create_favorite(id = tweet["id_str"])
+                #print ("Favorited")
                     
-                if rannum == 4:
-                    #Below line favorites the statuses
-                    twitter.create_favorite(id = tweet["id_str"])
-                    #print ("Favorited")
-                    
-                print(message)
-                screenname = "@" + tweet["user"]["screen_name"];
-                print(screenname)
-                twitter.update_status(status=screenname + message, in_reply_to_status_id=tweet["id_str"])
-                #print("Debug block 1")
-                if count == 0:
-                    idnum = tweet["id_str"]
-                count = 1
-                time.sleep(timeout)
+            print(message)
+            screenname = "@" + tweet["user"]["screen_name"];
+            print(screenname)
+            twitter.update_status(status=screenname + message, in_reply_to_status_id=tweet["id_str"])
+            #print("Debug block 1")
+            if count == 0:
+                idnum = tweet["id_str"]
+            count = 1
+            time.sleep(timeout)
                 
 
-            except TwythonError as e:
-                print ("Error")
-                time.sleep(timeout)
-        else:
-            print("Skip")
+        except TwythonError as e:
+            print ("Error")
             time.sleep(timeout)
+
     #print(search_results)
     #print("Debug Block 2")
 
