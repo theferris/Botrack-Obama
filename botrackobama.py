@@ -3,7 +3,7 @@ import sys
 import random
 from twython import Twython, TwythonError
 
-timeout = 1.44 * 60
+timeout = 10 * 60
 idnum = '0' #a tweet ID can be put in here to limit searches
 count = 0
 
@@ -27,8 +27,6 @@ while True:
     tweets1 = open("botrackobamatweets.txt").readlines() #creates a list from a text file
     search_results = twitter.search(q="thanksobama", since_id = idnum, count=20) #searchs a hashtag from after a certian tweet with a max of 20 results
     listlength = len(tweets1)
-    if listlength == 0:
-        time.sleep(timeout) #delays the search if no results are returned, if this is not in place it will time out and crash
     #print(search_results)
     count = 0
     for tweet in search_results["statuses"]:
@@ -56,12 +54,12 @@ while True:
                 idnum = tweet["id_str"]
                 print(idnum)
             count = 1
-            time.sleep(timeout)
                 
 
         except TwythonError as e:
             print ("Error")
-            time.sleep(timeout)
+        
+    time.sleep(timeout)
 
     #print(search_results)
     #print("Debug Block 2")
