@@ -18,7 +18,7 @@ twitter = Twython(apiKey,apiSecret,accessToken,accessTokenSecret)
 while True:
     #auto follow back function
     try:
-        followers = twitter.get_followers_ids(screen_name = "Botrack Obama")
+        followers = twitter.get_followers_ids(screen_name = "Botrack Obama") #Enter twitter handle here
         for followers_ids in followers['ids']:
             twitter.create_friendship(user_id=followers_ids)
     except TwythonError as e:
